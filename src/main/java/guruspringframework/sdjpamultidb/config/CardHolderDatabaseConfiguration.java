@@ -35,11 +35,13 @@ public class CardHolderDatabaseConfiguration {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean cardholderEntityManagerFactory(@Qualifier("cardholderDataSource") DataSource cardholderDataSource,
-                                                                                 EntityManagerFactoryBuilder builder) {
+    public LocalContainerEntityManagerFactoryBean cardholderEntityManagerFactory(
+            @Qualifier("cardholderDataSource") DataSource cardholderDataSource,
+            EntityManagerFactoryBuilder builder) {
 
         Properties props = new Properties();
         props.put("hibernate.hbm2ddl.auto", "validate");
+        props.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy");
 
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = builder.dataSource(cardholderDataSource)
                 .packages(CreditCardHolder.class)
